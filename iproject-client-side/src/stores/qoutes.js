@@ -3,13 +3,13 @@ import axios from 'axios'
 import { io } from 'socket.io-client';
 import swall from 'sweetalert'
 import swal from 'sweetalert'
-import Swal from 'sweetalert2'
+
 
 export const useQuoteStore = defineStore({
   id: 'quotes',
   state: () => ({
 
-    baseUrl: 'http://localhost:4000',
+    baseUrl: 'https://my-quotesapp.herokuapp.com',
 
     loginValue: {
       email: '',
@@ -27,7 +27,7 @@ export const useQuoteStore = defineStore({
 
     message: '',
 
-    myMessage: [],
+    myMessage: '',
 
     entity: false,
 
@@ -199,7 +199,9 @@ export const useQuoteStore = defineStore({
 
     setupSocketConnection(value) {  
         
-        this.socket = io('http://localhost:4000');
+        this.socket = io('https://my-quotesapp.herokuapp.com');
+
+        this.myMessage = value
         
         this.socket.emit('my message', value);
         

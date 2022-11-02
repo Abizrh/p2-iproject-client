@@ -4,7 +4,7 @@
       <div class="col-md-2 col-sm-4 col-xs-4 sidebar1">
         <div class="logo">
           <img
-            src="http://frontendfreecode.com/img/people-64-1.jpg"
+            src="../assets/person.png"
             class="img-responsive center-block"
             alt="Logo"
           />
@@ -32,12 +32,18 @@
       </div>
       <div class="col-md-10 col-sm-8 main-content">
         <QuoteCard />
+
+        <!--  -->
+
+        <hr />
+      
+
+
+        <hr />
+
+        <!--  -->
         <div class="container mt-3">
-          <!-- <h1 class="text-center">
-            <span>Sorry we dont have food, that you lookin for.</span>
-          </h1> -->
           <div class="row mt-3">
-            <!-- Quote Card -->
             <ul
               class="pagination"
               style="margin-bottom: 10px; margin-top: 10px"
@@ -62,7 +68,6 @@
 import QuoteCard from "../components/QuoteCard.vue";
 import { mapState, mapActions } from "pinia";
 import { useQuoteStore } from "../stores/qoutes";
-// import AnimeQuote from "../components/AnimeQuote.vue";
 
 export default {
   data() {
@@ -83,7 +88,7 @@ export default {
       "quoteOfTheDay",
       "fetchAnime",
       "fetchProgramming",
-      'getQuiz'
+      "getQuiz",
     ]),
 
     onHandleAdd() {
@@ -135,6 +140,8 @@ export default {
 </script>
 
 <style>
+
+
 .sidebar1 {
   background: #f17153;
   /* For browsers that do not support gradients */
@@ -150,13 +157,15 @@ export default {
   min-height: 100%;
 }
 .logo {
-  max-height: 130px;
+  max-height: 300px;
 }
 .logo > img {
   margin-top: 30px;
   padding: 3px;
   border: 3px solid white;
   border-radius: 100%;
+  width: 90px;
+  height: 100px;
 }
 .list {
   color: #fff;

@@ -1,8 +1,22 @@
 <template>
   
-  <div class="geeks">
+  <!-- <div class="geeks">
     <h1>Make youre own quotes here...</h1>
-  </div>
+  </div> -->
+  <section id="header" class="header-one">
+	<div class="container">
+		<div class="row">
+
+			<div class="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8">
+          <div class="header-thumb">
+              <h1 class="wow fadeIn" data-wow-delay="1.6s">Quotes</h1>
+              <h3 class="wow fadeInUp" data-wow-delay="1.9s">Share your quote with others...</h3>
+          </div>
+			</div>
+
+		</div>
+	</div>		
+</section>
 </template>
 <script>
 import QuoteCard from "../components/QuoteCard.vue";

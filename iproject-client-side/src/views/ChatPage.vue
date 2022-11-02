@@ -1,17 +1,4 @@
 <template>
-
-  <!-- <div class="container">
-    <div style=" margin-left: 570px;">
-        <p  >{{ message }}</p>
-        <span class="time-right">11:00</span>
-    </div>
-  </div>
-
-  <div class="container darker">
-    <p></p>
-    <span class="time-left">11:01</span>
-  </div> -->
-
   <div class="container content">
     <div class="row">
       <div class="col-xl-9 col-lg-12 col-md-9 col-sm-16 col-12">
@@ -22,10 +9,18 @@
               <li class="in"></li>
               <li class="out"></li>
               <li class="in">
-                <div class="chat-body" ref="myRef">
+                <div class="chat-body">
                   <div class="chat-message">
-                    <h5  style="font-size: 20px">{{ message }}</h5>
-                    
+                    <h5 style="font-size: 20px">{{ message }}</h5>
+                  </div>
+                </div>
+              </li>
+              <li class="out">
+                <div class="chat-body">
+                  <div class="chat-message">
+                    <h4 class="name"></h4>
+                    <h5 style="font-size: 20px ;" >{{ myMessage }}</h5>
+                    <h2></h2>
                   </div>
                 </div>
               </li>
@@ -50,17 +45,21 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import { useQuoteStore } from "../stores/qoutes";
+import { useSocket } from "../stores/socket";
 import { io } from "socket.io-client";
 
 export default {
   data() {
-
     return {
       inputMessage: "",
       iniPesan: "",
 
       username: localStorage.username,
-      socket: io(),
+      socket: io('https://my-quotesapp.herokuapp.com'),
+
+      messages: [],
+      users: []
+      
     };
   },
 
@@ -68,19 +67,76 @@ export default {
     ...mapActions(useQuoteStore, ["setupSocketConnection", "testing"]),
 
     toSendMessage() {
-      this.setupSocketConnection(this.inputMessage);
-
+      this.$emit('send-message', this.inputMessage);
       this.inputMessage = ''
     },
 
-    
-    
+    readMsg(){
+      let self  = this
+      this.socket.on('read-msg', (message) => {
+
+        self.messages.push({
+          text: message.text,
+          user: message.user
+        })
+      })
+
+    },
+
+    userConnect(){
+
+      let self = this
+      this.socket.on('user-connected', (userId) => {
+
+        self.users.push(userId)
+      })
+
+    },
+
+    initChat(){
+
+      let self = this
+
+      this.socket.on('init-chat', (msg) => {
+        self.messages = msg
+      })
+    },
+
+    updateUser(){
+
+      let self = this
+
+      this.socket.on('update-users', (user) => {
+
+        self.users = user
+
+      })
+    },
+
+    sendMessage(message){
+
+      if(message){
+        this.socket.emit('send-msg', {message: message, user: this.username})
+      }
+    },
+
+    setName(username){
+
+      this.username = username
+      this.socket.emit('add-users', username)
+    },  
   },
   computed: {
     ...mapState(useQuoteStore, ["message", "testingValue", "myMessage"]),
   },
 
-  created() {},
+  mounted() {
+
+    this.readMsg(),
+    this.initChat()
+    this.updateUser()
+    this.userConnect()
+  },
 };
 </script>
 <style>

@@ -34,6 +34,7 @@
                       <button type="submit" @click.prevent="toAdd">Add</button>
                   </form>
                   <p v-if="!isStat">may you want to know what is that word meaning
+                      only works in english. 
                     <a @click.prevent="showInput" >Click here</a>
                   </p>
                   <!-- <textarea name="" id="" cols="15" rows="3"></textarea> -->
